@@ -12,7 +12,7 @@ describe("ProposalDAO Contract", function () {
         await token.transfer(voter2.address, 200);
         // Deploy the DAO contract
         DAO = await ethers.getContractFactory("ProposalDAO");
-        dao = await DAO.deploy(token.address);
+        dao = await DAO.deploy(token.target || token.address);
     });
     it("Should create a proposal", async () => {
         await dao.createProposal("Proposal 1", "Invest in ETH staking");
@@ -21,7 +21,7 @@ describe("ProposalDAO Contract", function () {
     });
     it("Should allow voting and tally correctly", async () => {
         await dao.createProposal("Proposal 2", "Stake DAI");
-        await token.connect(voter1).approve(dao.address, 100);
+        await token.connect(voter1).approve(dao.target || dao.address, 100);
         await dao.connect(voter1).vote(1, true); // vote FOR
         const updatedProposal = await dao.proposals(1);
         expect(updatedProposal.votesFor).to.equal(100);

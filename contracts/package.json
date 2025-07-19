@@ -1,9 +1,11 @@
 {
   "name": "contracts",
   "version": "1.0.0",
-  "main": "hardhat.config.js",
+  "main": "hardhat.config.cjs",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy:local": "npx hardhat run scripts/deploy.cjs",
+    "deploy:sepolia": "npx hardhat run scripts/deploy.cjs --network sepolia"
   },
   "keywords": [],
   "author": "",
@@ -13,5 +15,8 @@
     "@nomicfoundation/hardhat-toolbox": "^6.1.0",
     "dotenv": "^17.2.0",
     "hardhat": "^2.26.0"
+  },
+  "dependencies": {
+    "fix-esm": "^1.0.1"
   }
 }
