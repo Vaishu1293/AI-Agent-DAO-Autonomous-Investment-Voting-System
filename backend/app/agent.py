@@ -1,12 +1,19 @@
-import os
-import openai
-from dotenv import load_dotenv
+from openai import OpenAI
 from app.schemas import Proposal
+from dotenv import load_dotenv
+import os
 
-load_dotenv()
+# Load .env from the parent directory of backend/
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(os.path.dirname(__file__)), '..', '.env'))
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
-MODEL = os.getenv("MODEL_NAME", "gpt-4")
+
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    raise ValueError("❌ OPENAI_API_KEY not found in .env")
+
+client = OpenAI(api_key=api_key)
+MODEL = 'gpt-4'
+
 def generate_proposal() -> Proposal:
     prompt = """
     You are a DeFi investment strategist AI. Based on current market trends, generate a proposal
@@ -17,10 +24,21 @@ def generate_proposal() -> Proposal:
     Description: ...
     Rationale: ...
     """
-    response = openai.ChatCompletion.create(model=MODEL, messages=[{"role": "user", "content": prompt}], max_tokens=400)
-    content = response.choices[0].message['content']
-    # Simple text parse
-    title = content.split("Title:")[1].split("Description:")[0].strip()
-    description = content.split("Description:")[1].split("Rationale:")[0].strip()
-    rationale = content.split("Rationale:")[1].strip()
+    
+    response = client.chat.completions.create(
+        model=MODEL,
+        messages=[{"role": "user", "content": prompt}],
+        max_tokens=400
+    )
+
+    content = response.choices[0].message.content.strip()
+
+    # Parse the content
+    try:
+        title = content.split("Title:")[1].split("Description:")[0].strip()
+        description = content.split("Description:")[1].split("Rationale:")[0].strip()
+        rationale = content.split("Rationale:")[1].strip()
+    except IndexError:
+        raise ValueError("Failed to parse response content:\n" + content)
+
     return Proposal(title=title, description=description, rationale=rationale)
