@@ -16,6 +16,7 @@ def get_proposal():
 @app.post("/proposal/send")
 def generate_and_send():
     proposal = generate_proposal()
+    print(proposal)
     tx_hash = send_proposal_to_chain(proposal.title, proposal.description)
     return {
         "title": proposal.title,
