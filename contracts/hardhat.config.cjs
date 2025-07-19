@@ -1,7 +1,13 @@
-require("@nomicfoundation/hardhat-toolbox");
-require("dotenv").config({ path: "../.env" });
+// hardhat.config.js (ESM version)
+const dotenv = require("dotenv");
+dotenv.config({ path: "../.env" });
 
-module.exports = {
+require("@nomicfoundation/hardhat-toolbox");
+
+// ... rest of your config
+
+
+const config = {
   defaultNetwork: "hardhat",
   solidity: "0.8.28",
   paths: {
@@ -19,7 +25,10 @@ module.exports = {
     },
     ganache: {
       url: "http://127.0.0.1:8545",
-      accounts: [process.env.GANACHE_KEY]
-    }
+      accounts: [process.env.GANACHE_KEY],
+    },
   },
 };
+
+module.exports = config;
+
