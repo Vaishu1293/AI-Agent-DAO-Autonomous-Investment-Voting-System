@@ -17,5 +17,9 @@ module.exports = {
       url: process.env.SEPOLIA_RPC,
       accounts: [process.env.PRIVATE_KEY],
     },
+    ganache: {
+      url: "http://127.0.0.1:8545",
+      accounts: [process.env.GANACHE_KEY]
+    }
   },
 };
