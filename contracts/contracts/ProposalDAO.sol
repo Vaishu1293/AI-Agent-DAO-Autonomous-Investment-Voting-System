@@ -77,4 +77,30 @@ contract ProposalDAO {
         // Logic to execute can be customized here (e.g., call another contract)
         emit ProposalExecuted(_proposalId);
     }
+
+    function checkUpkeep(
+        bytes calldata
+    ) external view returns (bool upkeepNeeded, bytes memory) {
+        for (uint i = 1; i <= proposalCount; i++) {
+            Proposal storage p = proposals[i];
+            if (
+                block.timestamp > p.deadline &&
+                !p.executed &&
+                p.votesFor > p.votesAgainst
+            ) {
+                return (true, abi.encode(i));
+            }
+        }
+        return (false, bytes(""));
+    }
+
+    function performUpkeep(bytes calldata data) external {
+        uint256 proposalId = abi.decode(data, (uint256));
+        Proposal storage p = proposals[proposalId];
+        require(block.timestamp > p.deadline, "Deadline not reached");
+        require(!p.executed, "Already executed");
+        require(p.votesFor > p.votesAgainst, "Not approved");
+        p.executed = true;
+        emit ProposalExecuted(proposalId);
+    }
 }
