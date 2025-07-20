@@ -11,7 +11,7 @@ import { config as wagmiConfig } from './wagmi.config'; // Adjust path as needed
 
 // Contract Details
 export const contractConfig = {
-  address: '0x6B2ff0945bc5f33e28f1d29fF71Ba020DDa63253',
+  address: '0xf02fC775C9d7Adc0C61f47CA2018Aa19C6194443',
   abi: abi["abi"],
 } as const;
 
