@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from app.schemas import Proposal
 from app.agent import generate_proposal
 from app.submitter import send_proposal_to_chain
-from backend.bot.notifier import send_telegram_message
+from bot.notifier import send_telegram_message
 
 app = FastAPI()
 @app.get("/")

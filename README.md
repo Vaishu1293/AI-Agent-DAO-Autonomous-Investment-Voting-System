@@ -8,8 +8,8 @@ Autonomous DeFi governance system that uses **LLMs to generate proposals**, **to
 
 | Component           | URL                                                 |
 |---------------------|-----------------------------------------------------|
-| 🗳️ Frontend Voting DApp | https://ai-agent-dao.vercel.app                      |
-| 🧠 AI Proposal Generator | https://huggingface.co/spaces/yourname/ai-agent-dao |
+| 🗳️ Frontend Voting DApp | https://ai-agent-dao-autonomous-investment.vercel.app/                     |
+| 🧠 AI Proposal Generator | https://ai-agent-dao-autonomous-investment.onrender.com/ |
 | 🔗 Smart Contract (Sepolia) | https://sepolia.etherscan.io/address/0x...         |
 | 📊 Supabase Admin Panel | https://app.supabase.com/project/xyz               |
 
